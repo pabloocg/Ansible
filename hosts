@@ -1,0 +1,4 @@
+webapp1 ansible_host=34.254.162.142
+
+[webapps]
+webapp1
