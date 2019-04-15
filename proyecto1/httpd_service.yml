@@ -1,0 +1,17 @@
+---
+- name: Install httpd service
+  yum:
+    name: httpd
+    state: latest
+
+- name: Start httpd service
+  service:
+    name: httpd
+    state: started
+
+- name: Change the index.html
+  copy: 
+    src: ~/carpeta-github/indexmod.html
+    dest: /var/www/html/index.html
+
+

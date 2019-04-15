@@ -1,0 +1,25 @@
+---
+- name: Set up public Subnet route table
+  ec2_vpc_route_table:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    tags:
+      Name: Public
+    subnets: 
+      - "{{ subnet_id1 }}"
+      - "{{ subnet_id2 }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw_id }}"
+  register: public_route_table
+
+- name: Set up private Subnet route table
+  ec2_vpc_route_table:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    tags:
+      Name: Private
+    subnets: 
+      - "{{ subnet_id3 }}"
+      - "{{ subnet_id4 }}"
+  register: private_route_table

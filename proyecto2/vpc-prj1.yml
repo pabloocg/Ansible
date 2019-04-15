@@ -1,0 +1,11 @@
+---  
+- name: create VPC
+  ec2_vpc_net:
+    name: PRJ1-vpc-eu-west2
+    cidr_block: 192.168.0.0/16
+    region: "{{ region }}"
+  register: vpc_prj1
+  
+- name: "set fact: VPC ID"
+  set_fact:
+    vpc_id: "{{ vpc_prj1.vpc.id }}"

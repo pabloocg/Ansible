@@ -1,0 +1,11 @@
+---
+- name: Create the igw 
+  ec2_vpc_igw:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_prj1 }}"
+    state: present
+  register: igw
+
+- name: "set fact: IGW ID"
+  set_fact:
+    igw_id: "{{ igw.gateway.id }}"

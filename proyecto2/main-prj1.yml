@@ -1,0 +1,35 @@
+---
+- name: Starting the playbook
+  hosts: localhost
+  connection: local
+  gather_facts: True
+  vars: 
+    region: eu-west-2
+    az1: eu-west-2a
+    az2: eu-west-2b
+    ami_id: ami-09ead922c1dad67e4
+    igw_id: igw-0afe098820111d251
+  tasks:
+    - name: Importando VPC
+      include_tasks: vpc-prj1.yml
+
+    - name: Importando subnets
+      include_tasks: subnets-prj1.yml
+
+    - name: Importando route table
+      include_tasks: route-table-prj1.yml
+
+    - name: Importando security Groups
+      include_tasks: sg-prj1.yml
+
+    - name: Importando EC2 instance
+      include_tasks: instances-prj1.yml
+
+- name: Starting de httpd service 
+  hosts: webapps
+  become: yes
+  remote_user: ec2-user
+  gather_facts: True
+  tasks:
+    - name: Importando httpd_service.yml
+      include_tasks: httpd_service.yml

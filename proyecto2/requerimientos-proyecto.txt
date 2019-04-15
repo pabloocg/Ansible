@@ -1,0 +1,16 @@
+Proyecto:
+Region: Londres eu-west-2
+**crear una VPC: PRJ1-vpc-eu-west2 192.168.0.0/16
+**crear un IGW 
+**Dos az: eu-west2a eu-west2b
+**Subnet az-eu-west2a PUB1: 192.168.1.0/24
+**Subnet az-eu-west2b PUB2: 192.168.2.0/24
+**Subnet az-eu-west2a PRIV1: 192.168.3.0/24
+**Subnet az-eu-west2b PRIV1: 192.168.4.0/24
+**Security Group para frontends
+**Security Group para backends
+**Tabla de rutas de cada subnet
+**Una instancia en cada subnet con su respectivo security Group
+Especificaciones:
+    - A los backends solo se podra acceder desde los frontends
+    - A los frontends se podrá acceder desde internet

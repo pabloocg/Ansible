@@ -1,0 +1,42 @@
+---      
+- name: create security group for the frontends
+  ec2_group:
+    name: sg_webserverprj1  
+    description: security group for the frontends web
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    state: present 
+    rules:
+    - proto: tcp  
+      from_port: 22  
+      to_port: 22  
+      cidr_ip: 0.0.0.0/0  
+      rule_desc: Allow port 22 SSH
+
+    - proto: tcp  
+      from_port: 80    
+      to_port: 80    
+      cidr_ip: 0.0.0.0/0
+      rule_desc: Allow port 80  
+
+    rules_egress:
+    - proto: all
+      cidr_ip: 0.0.0.0/0
+
+- name: create security group for the backends 
+  ec2_group:
+    name: sg_backendsprj1   
+    description: security group for the backends
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    state: present 
+    rules:
+    - proto: tcp  
+      from_port: 80    
+      to_port: 80    
+      group_name: sg_webserverprj1
+      rule_desc: Allow port 80  
+
+    rules_egress:
+    - proto: all
+      cidr_ip: 0.0.0.0/0
