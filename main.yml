@@ -1,0 +1,6 @@
+---
+- name: Starting the playbook
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  import_playbook: create-vpc-aws.yml

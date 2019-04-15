@@ -5,7 +5,6 @@
   vars:  
     region: eu-west-1
     ami_id: ami-07683a44e80cd32c5
-    prefix: test
     az: eu-west-1a
   tasks:  
     - name: create VPC
@@ -18,6 +17,13 @@
     - name: "set fact: VPC ID"
       set_fact:
         vpc_id: "{{ create_vpc.vpc.id }}"
+
+    - name: Create an Internet gateway_id
+      ec2_vpc_igw:
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        state: present
+      register: igw
     
     - name: create subnets
       ec2_vpc_subnet:
@@ -48,7 +54,19 @@
           cidr_ip: 0.0.0.0/0  
         rules_egress:
         - proto: all
-          cidr_ip: 0.0.0.0/0   
+          cidr_ip: 0.0.0.0/0  
+
+    - name: Set up public Subnet route table
+      ec2_vpc_route_table:
+        region: "{{ region }}"
+        vpc_id: "{{ vpc_id }}"
+        tags:
+          Name: Public
+        subnets: "{{ subnet_id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: igw-0d463711789ac26e1
+      register: public_route_table 
 
     - name: Provision a EC2 instances
       ec2_instance:

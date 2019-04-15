@@ -1,0 +1,20 @@
+---  
+- hosts: localhost  
+  connection: local  
+  gather_facts: False    
+  vars:  
+    region: eu-west-1
+    az: eu-west-1a
+  tasks:  
+    - name: create subnet 1
+      ec2_vpc_subnet:
+        name: subnet-eu-west-1a-public
+        vpc_id: "{{ vpc_id }}"
+        cidr: 10.0.0.0/24
+        region: "{{ region }}"
+        az: "{{ az }}"
+      register: subnet-eu-west-1a
+
+    - name: "set fact: Subnet ID"
+      set_fact:
+        subnet_id: "{{ create_subnet.subnet.id }}"

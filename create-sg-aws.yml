@@ -1,0 +1,42 @@
+---  
+- hosts: localhost  
+  connection: local  
+  gather_facts: False    
+  vars:  
+    region: eu-west-1
+    vpc_id: vpc-007420cda36be8691
+  tasks:      
+    - name: create security group  
+      ec2_group:
+        name: sg_webservertest    
+        description: security group for testing ansible
+        region: "{{ region }}"
+        vpc_id: "{{ vpc_id }}"
+        state: present #absent
+
+        #Firewall inbound rules
+        rules:
+        - proto: tcp  
+          from_port: 22  
+          to_port: 22  
+          cidr_ip: 0.0.0.0/0  
+          rule_desc: Allow port 22 SSH
+          #group_id: Allow only for security group especified id
+          #group_name: Allow only for security group especified name
+
+        - proto: tcp  
+          from_port: 80    
+          to_port: 80    
+          cidr_ip: 0.0.0.0/0
+          rule_desc: Allow port 80  
+
+        #Firewall outbound rules
+        rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0
+
+
+    #- name: "Delete group by its id"
+    # ec2_group:
+    #    group_id: "{{ sg-id }}"
+    #    state: absent
