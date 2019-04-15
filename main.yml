@@ -2,5 +2,33 @@
 - name: Starting the playbook
   hosts: localhost
   connection: local
+  gather_facts: True
+  vars: 
+    region: eu-west-1
+    az: eu-west-1a
+    ami_id: ami-07683a44e80cd32c5
+  tasks:
+    - name: Importando VPC
+      include_tasks: create-vpc-aws.yml
+
+    - name: Importando subnets
+      include_tasks: create-subnet-aws.yml
+
+    - name: Importando route table
+      include_tasks: create-routetable-aws.yml
+
+    - name: Importando security Groups
+      include_tasks: create-sg-aws.yml
+
+    - name: Importando EC2 instance
+      include_tasks: create-instance-ec2-aws.yml
+
+- name: Starting de httpd service 
+  hosts: webapps
+  become: yes
+  remote_user: ec2-user
   gather_facts: False
-  import_playbook: create-vpc-aws.yml
+  tasks:
+    - name: Importando httpd_service.yml
+      include_tasks: httpd_service.yml
+    

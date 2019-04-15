@@ -1,16 +1,17 @@
 ---
-- hosts: all
-  become: yes
-  remote_user: ec2-user
-  gather_facts: False
-  tasks:
-          - name: Install httpd service
-            yum:
-                    name: httpd
-                    state: latest
+- name: Install httpd service
+  yum:
+    name: httpd
+    state: latest
 
-          - name: Start httpd service
-            service:
-                    name: httpd
-                    state: started
+- name: Start httpd service
+  service:
+    name: httpd
+    state: started
+
+- name: Change the index.html
+  copy: 
+    src: ~/carpeta-github/indexmod.html
+    dest: /var/www/html/index.html
+
 

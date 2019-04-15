@@ -1,4 +1,4 @@
-webapp1 ansible_host=52.16.4.214
+webapp1 ansible_host=34.242.86.100
 
 [webapps]
 webapp1

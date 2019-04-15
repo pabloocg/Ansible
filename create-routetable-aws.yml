@@ -1,21 +1,12 @@
----  
-- hosts: localhost  
-  connection: local  
-  gather_facts: False    
-  vars:  
-    region: eu-west-1
-    vpc_id: vpc-007420cda36be8691
-  tasks:  
-    - name: Set up public Subnet route table
-      ec2_vpc_route_table:
-        region: "{{ region }}"
-        vpc_id: "{{ vpc_id }}"
-        tags:
-          Name: Public
-        subnets: subnet-095a95b8dc6e67844
-        routes:
-          - dest: 0.0.0.0/0
-            gateway_id: igw-0d463711789ac26e1
-      register: public_route_table
-
-
+---
+- name: Set up public Subnet route table
+  ec2_vpc_route_table:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    tags:
+      Name: Public
+    subnets: "{{ subnet_id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: igw-0d463711789ac26e1
+  register: public_route_table 
