@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ec2-user
+  vars:
+   user_name: pablo
+  tasks:
+    - name: Create the user "{{ user_name }}" in the remote hosts
+      user:
+        name: "{{ user_name }}"
+
+    - name: Add the user's public key for "{{ user_name }}"
+      authorized_key:
+        user: "{{ user_name }}"
+        state: present
+        key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Aq7Yh7m07O21eZKfZIgy6Dz8dpWi8jv11mh0euaOHA12YhovwEg8IQgNWJSE+tKac3mm6+LOQMSzv+Xe8Go63hhoZfg/rLoKNeBv8L5RMVFxVqB0dJjMa8JsOBkzfchXQyCUspOPS/HQGBnCKZ2gRsvt3cV9W2vy5KTSWD2Js5/vpXUqBqcTbxi/SF7BjN0VVWd4MjdHUx59CpKNZckiIeswa6hxn0nAFueNI+gtRk9rWgkEYjyGi9CD+3cm9W1OvZA3xo8G9N9wlnZi5JCecyRawirAFG+nXidBwM64JFnsoF42ZrIQu2zZurV+FvGQboyES8SRiG1ds2np+T89 pablo@PC-PABLO'
+
+    - name: Add the user "{{ user_name }}" to the sudoers group
+      lineinfile:
+       dest: /etc/sudoers
+       state: present
+       line: '{{ user_name }} ALL=(ALL) NOPASSWD:ALL'
