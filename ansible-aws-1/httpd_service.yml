@@ -2,9 +2,23 @@
 - hosts: all
   become: yes
   tasks: 
+  
+    - name: Apache2 install
+      yum:
+        name: httpd
+        state: present
     - name: Change the index.html
       copy: 
         src: ~/carpeta-github/ansible-aws-1/indexmod.html
         dest: /var/www/html/index.html
-
+    - name: apache2 service restart
+      service: 
+        name: httpd
+        state: restarted
+        
+    - name: apache2 service running and enabled
+      service: 
+        name: httpd
+        state: started
+        enabled: yes
  
