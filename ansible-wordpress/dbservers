@@ -1,2 +1,2 @@
 [dbservers]
-dbserver ansible_host=34.243.63.123
+dbserver ansible_host=ip
