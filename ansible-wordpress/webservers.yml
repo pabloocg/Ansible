@@ -1,0 +1,12 @@
+---
+
+
+- name: Webservers playbook configuration
+  hosts: webservers
+  become: yes
+  roles: 
+   - role: apache
+   - role: php
+   - role: wordpress
+
+...

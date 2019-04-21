@@ -1,0 +1,10 @@
+---
+
+- name: Load Balancer playbook configuration
+  hosts: loadbalancers
+  become: yes
+  roles: 
+   - role: haproxy
+
+...
+

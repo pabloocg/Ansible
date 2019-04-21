@@ -1,0 +1,11 @@
+---
+
+- name: Database servers playbook configuration
+  hosts: dbservers
+  become: yes
+  roles:
+    - role: mysql
+
+
+...
+

@@ -1,0 +1,2 @@
+[loadbalancers]
+loadbalancer ansible_host=52.17.42.231

@@ -1,0 +1,8 @@
+---
+
+- name: Install PHP packages
+  apt:
+    name: "{{ php_packages }}"
+    state: present
+  notify: restart apache 
+...
